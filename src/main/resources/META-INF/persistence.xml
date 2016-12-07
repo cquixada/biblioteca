@@ -10,9 +10,7 @@
 
 		<jta-data-source>java:/bibliotecaDS</jta-data-source>
 
-		<class>br.edu.fa7.model.Livro</class>
-		<class>br.edu.fa7.model.SugestaoAquisicao</class>
-		<class>br.edu.fa7.model.LivroSugerido</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
