@@ -35,30 +35,33 @@ public class SugestaoAquisicaoEJB {
 		}
 	}
 
-	public Boolean fazerPedido(SugestaoAquisicao sugestao) throws PedidoException {
-		if (sugestao.getId() == null) {
+	public void fazerPedido(SugestaoAquisicao sugestao) throws PedidoException {
+		if (sugestao.getId() == null || sugestao.getDataEnvioPedido() != null) {
 			throw new PedidoException();
 		}
 
-		PedidoDTO dto = new PedidoDTO(1000L);
+		// URL chamada pela Distribuidora após o processamento do Pedido.
+		String callback = "http://localhost:8080/biblioteca/notificarPedido?controle=" + sugestao.getId();
+
+		PedidoDTO dto = new PedidoDTO(1000L, callback);
 
 		for (LivroSugerido livroSugerido : sugestao.getLivrosSugeridos()) {
-			dto.getItens().put(livroSugerido.getLivro().getIdProduto(), livroSugerido.getQuantidade());
+			dto.getItens().put(livroSugerido.getLivro().getIdProduto(), livroSugerido.getQtdeSolicitada());
 		}
 
 		Gson gson = new Gson();
 
-		Response resp = ClientBuilder.newClient().target("http://localhost:8090/distribuidora/registrarPedido")
-				.request(MediaType.APPLICATION_JSON).post(Entity.json(gson.toJson(dto)), Response.class);
+		try {
+			Response resp = ClientBuilder.newClient().target("http://localhost:8090/distribuidora/solicitarPedido")
+					.request(MediaType.APPLICATION_JSON).post(Entity.json(gson.toJson(dto)), Response.class);
 
-		if (resp.getStatusInfo() == Response.Status.OK) {
-			sugestao.setData(new Date());
-			sugestao.setAtiva(false);
-			em.merge(sugestao);
+			if (resp.getStatusInfo() == Response.Status.OK) {
+				sugestao.setDataEnvioPedido(new Date());
+				em.merge(sugestao);
+			}
 
-			return true;
+		} catch (Exception e) {
+			throw new PedidoException();
 		}
-
-		return false;
 	}
 }

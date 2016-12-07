@@ -42,7 +42,7 @@ public class SugestaoAquisicaoBean {
 
 	public String fazerPedido() {
 		try {
-			sugestao.setAtiva(!sugestaoAquisicaoEJB.fazerPedido(sugestao));
+			sugestaoAquisicaoEJB.fazerPedido(sugestao);
 
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Pedido enviado à distribuidora.", "Pedido enviado à distribuidora."));

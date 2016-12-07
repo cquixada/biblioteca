@@ -26,7 +26,8 @@
 					<f:facet name="header">
 						<h:outputText value="Quantidade" />
 					</f:facet>
-					<h:inputText value="#{livroSugerido.quantidade}" required="true">
+					<h:inputText value="#{livroSugerido.qtdeSolicitada}"
+						required="true">
 						<f:validateLongRange minimum="0" maximum="999999" />
 					</h:inputText>
 				</h:column>
@@ -37,7 +38,7 @@
 
 			<h:commandButton id="botaoPedir" value="Pedir"
 				action="#{sugestaoAquisicaoBean.fazerPedido}"
-				rendered="#{sugestaoAquisicaoBean.sugestao.ativa}" />
+				rendered="#{sugestaoAquisicaoBean.sugestao.dataEnvioPedido == null}" />
 
 			<h:commandButton id="botaoVoltar" value="Voltar"
 				action="index?faces-redirect=true" immediate="true" />

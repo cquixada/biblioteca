@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "sugestoes_aquisicao")
-@NamedQuery(name = "obterSugestaoAquisicaoAtiva", query = "SELECT sa FROM SugestaoAquisicao sa WHERE sa.ativa = true")
+@NamedQuery(name = "obterSugestaoAquisicaoAtiva", query = "SELECT sa FROM SugestaoAquisicao sa WHERE sa.dataEnvioPedido IS NULL")
 public class SugestaoAquisicao implements Serializable {
 	private static final long serialVersionUID = 4546622568582391153L;
 
@@ -28,26 +28,25 @@ public class SugestaoAquisicao implements Serializable {
 	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = false)
-	private Date data;
+	@Column(name = "data_atualizacao", nullable = false)
+	private Date dataAtualizacao;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "data_envio_pedido", nullable = true)
+	private Date dataEnvioPedido;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "data_retorno_pedido", nullable = true)
+	private Date dataRetornoPedido;
 
 	@OneToMany(mappedBy = "sugestao", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<LivroSugerido> livrosSugeridos;
 
-	@Column(nullable = false)
-	private Boolean ativa;
-
 	public SugestaoAquisicao() {
 	}
 
-	public SugestaoAquisicao(Boolean ativa) {
-		this.ativa = ativa;
-		livrosSugeridos = new HashSet<>();
-	}
-
-	public SugestaoAquisicao(Date data, Boolean ativa) {
-		this.data = data;
-		this.ativa = ativa;
+	public SugestaoAquisicao(Date dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
 		livrosSugeridos = new HashSet<>();
 	}
 
@@ -59,12 +58,28 @@ public class SugestaoAquisicao implements Serializable {
 		this.id = id;
 	}
 
-	public Date getData() {
-		return data;
+	public Date getDataAtualizacao() {
+		return dataAtualizacao;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setDataAtualizacao(Date dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
+	}
+
+	public Date getDataEnvioPedido() {
+		return dataEnvioPedido;
+	}
+
+	public void setDataEnvioPedido(Date dataEnvioPedido) {
+		this.dataEnvioPedido = dataEnvioPedido;
+	}
+
+	public Date getDataRetornoPedido() {
+		return dataRetornoPedido;
+	}
+
+	public void setDataRetornoPedido(Date dataRetornoPedido) {
+		this.dataRetornoPedido = dataRetornoPedido;
 	}
 
 	public Set<LivroSugerido> getLivrosSugeridos() {
@@ -73,13 +88,5 @@ public class SugestaoAquisicao implements Serializable {
 
 	public void setLivrosSugeridos(Set<LivroSugerido> livrosSugeridos) {
 		this.livrosSugeridos = livrosSugeridos;
-	}
-
-	public Boolean getAtiva() {
-		return ativa;
-	}
-
-	public void setAtiva(Boolean ativa) {
-		this.ativa = ativa;
 	}
 }

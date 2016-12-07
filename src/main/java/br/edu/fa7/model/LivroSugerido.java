@@ -3,6 +3,7 @@ package br.edu.fa7.model;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,23 +21,27 @@ public class LivroSugerido implements Serializable {
 	private Long id;
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "id_sugestao")
+	@JoinColumn(name = "id_sugestao", nullable = false)
 	private SugestaoAquisicao sugestao;
 
 	@ManyToOne
-	@JoinColumn(name = "id_livro")
+	@JoinColumn(name = "id_livro", nullable = false)
 	private Livro livro;
 
-	private Integer quantidade;
+	@Column(name = "qtde_solicitada", nullable = false)
+	private Integer qtdeSolicitada;
+
+	@Column(name = "qtde_adquirida", nullable = true)
+	private Integer qtdeAdquirida;
 
 	public LivroSugerido() {
 	}
 
-	public LivroSugerido(SugestaoAquisicao sugestao, Livro livro, Integer quantidade) {
+	public LivroSugerido(SugestaoAquisicao sugestao, Livro livro, Integer qtdeSolicitada) {
 		super();
 		this.sugestao = sugestao;
 		this.livro = livro;
-		this.quantidade = quantidade;
+		this.qtdeSolicitada = qtdeSolicitada;
 	}
 
 	public Long getId() {
@@ -63,11 +68,19 @@ public class LivroSugerido implements Serializable {
 		this.livro = livro;
 	}
 
-	public Integer getQuantidade() {
-		return quantidade;
+	public Integer getQtdeSolicitada() {
+		return qtdeSolicitada;
 	}
 
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
+	public void setQtdeSolicitada(Integer qtdeSolicitada) {
+		this.qtdeSolicitada = qtdeSolicitada;
+	}
+
+	public Integer getQtdeAdquirida() {
+		return qtdeAdquirida;
+	}
+
+	public void setQtdeAdquirida(Integer qtdeAdquirida) {
+		this.qtdeAdquirida = qtdeAdquirida;
 	}
 }

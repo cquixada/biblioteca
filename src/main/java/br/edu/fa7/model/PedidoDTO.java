@@ -11,12 +11,15 @@ public class PedidoDTO implements Serializable {
 
 	private Map<Long, Integer> itens;
 
+	private String callback;
+
 	public PedidoDTO() {
 	}
 
-	public PedidoDTO(Long idCliente) {
+	public PedidoDTO(Long idCliente, String callback) {
 		super();
 		this.idCliente = idCliente;
+		this.callback = callback;
 		itens = new HashMap<>();
 	}
 
@@ -34,5 +37,13 @@ public class PedidoDTO implements Serializable {
 
 	public void setItens(Map<Long, Integer> itens) {
 		this.itens = itens;
+	}
+
+	public String getCallback() {
+		return callback;
+	}
+
+	public void setCallback(String callback) {
+		this.callback = callback;
 	}
 }

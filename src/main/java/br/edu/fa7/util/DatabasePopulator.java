@@ -28,7 +28,7 @@ public class DatabasePopulator {
 			em.persist(livro1);
 			em.persist(livro2);
 
-			SugestaoAquisicao sugestao = new SugestaoAquisicao(new Date(), true);
+			SugestaoAquisicao sugestao = new SugestaoAquisicao(new Date());
 
 			em.persist(sugestao);
 
