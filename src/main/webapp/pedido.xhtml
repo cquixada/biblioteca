@@ -8,11 +8,10 @@
 
 	<ui:define name="content">
 
-		<h:form id="pedidoForm"
-			rendered="#{sugestaoAquisicaoBean.sugestao != null}">
+		<h:form id="pedidoForm" rendered="#{fazerPedidoBean.sugestao != null}">
 
 			<h:dataTable id="listaLivrosSugeridos"
-				value="#{sugestaoAquisicaoBean.sugestao.livrosSugeridos}"
+				value="#{fazerPedidoBean.sugestao.livrosSugeridos}"
 				var="livroSugerido" border="1">
 
 				<h:column>
@@ -37,8 +36,8 @@
 			<br />
 
 			<h:commandButton id="botaoPedir" value="Pedir"
-				action="#{sugestaoAquisicaoBean.fazerPedido}"
-				rendered="#{sugestaoAquisicaoBean.sugestao.dataEnvioPedido == null}" />
+				action="#{fazerPedidoBean.fazerPedido}"
+				rendered="#{fazerPedidoBean.sugestao.dataEnvioPedido == null}" />
 
 			<h:commandButton id="botaoVoltar" value="Voltar"
 				action="index?faces-redirect=true" immediate="true" />
@@ -46,7 +45,7 @@
 		</h:form>
 
 		<h:link value="Voltar" outcome="index"
-			rendered="#{sugestaoAquisicaoBean.sugestao == null}" />
+			rendered="#{fazerPedidoBean.sugestao == null}" />
 
 	</ui:define>
 

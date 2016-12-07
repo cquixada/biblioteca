@@ -14,7 +14,7 @@ import br.edu.fa7.model.SugestaoAquisicao;
 
 @Named
 @RequestScoped
-public class SugestaoAquisicaoBean {
+public class FazerPedidoBean {
 
 	@Inject
 	private SugestaoAquisicaoEJB sugestaoAquisicaoEJB;
