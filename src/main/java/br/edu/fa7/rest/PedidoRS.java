@@ -20,7 +20,7 @@ public class PedidoRS {
 	private SugestaoAquisicaoEJB sugestaoAquisicaoEJB;
 
 	@PUT
-	@Path("{notificarPedido}")
+	@Path("notificarPedido")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response atualizarSugestao(@QueryParam("sugestao") Long idSugestao, PedidoDTO dto) {
