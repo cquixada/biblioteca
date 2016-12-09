@@ -1,0 +1,48 @@
+<ui:composition template="layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<ui:define name="title">Lista de Livros</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<h:dataTable id="listaEstoqueLivros"
+				value="#{reservaLivroBean.estoqueLivros}" var="estoqueLivro"
+				border="1">
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Título" />
+					</f:facet>
+					<h:outputText value="#{estoqueLivro.livro.titulo}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Quantidade" />
+					</f:facet>
+					<h:outputText value="#{estoqueLivro.quantidade}" />
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Reservar" />
+					</f:facet>
+					<h:commandButton value="+"
+						action="#{reservaLivroBean.adicionarParaReserva(estoqueLivro.livro)}" />
+				</h:column>
+			</h:dataTable>
+			<br />
+			<h:commandButton value="Voltar" action="index?faces-redirect=true" />
+			<c:if test="#{reservaLivroBean.getReservasPendentes().size() > 0}">
+				<br />
+				<h:commandLink action="reservasPendentes?faces-redirect=true"
+					value="Visualizar Reserva" />
+			</c:if>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

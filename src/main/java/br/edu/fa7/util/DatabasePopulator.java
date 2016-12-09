@@ -8,6 +8,7 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import br.edu.fa7.model.EstoqueLivro;
 import br.edu.fa7.model.Livro;
 import br.edu.fa7.model.LivroSugerido;
 import br.edu.fa7.model.SugestaoAquisicao;
@@ -31,9 +32,15 @@ public class DatabasePopulator {
 			SugestaoAquisicao sugestao = new SugestaoAquisicao(new Date());
 
 			em.persist(sugestao);
+			
+			EstoqueLivro estoqueLivro1 = new EstoqueLivro(livro1, 5);
+			EstoqueLivro estoqueLivro2 = new EstoqueLivro(livro2, 4);
+			
+			em.persist(estoqueLivro1);
+			em.persist(estoqueLivro2);
 
 			LivroSugerido livroSugerido1 = new LivroSugerido(sugestao, livro1, 2);
-			LivroSugerido livroSugerido2 = new LivroSugerido(sugestao, livro2, 1);
+			LivroSugerido livroSugerido2 = new LivroSugerido(sugestao, livro2, 1);					
 
 			sugestao.getLivrosSugeridos().add(livroSugerido1);
 			sugestao.getLivrosSugeridos().add(livroSugerido2);
