@@ -35,13 +35,41 @@ public class SugestaoAquisicaoEJB {
 		}
 	}
 
+	public SugestaoAquisicao obterSugestaoAquisicao(Long id) {
+		try {
+			SugestaoAquisicao sugestao = em.createNamedQuery("obterSugestaoAquisicaoPorId", SugestaoAquisicao.class)
+					.setParameter("id", id).getSingleResult();
+
+			return sugestao;
+
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
+	public void atualizar(Long idSugestao, PedidoDTO dto) throws NenhumaSugestaoException {
+		SugestaoAquisicao sugestao = obterSugestaoAquisicao(idSugestao);
+
+		if (sugestao == null) {
+			throw new NenhumaSugestaoException();
+		}
+
+		for (LivroSugerido livroSugerido : sugestao.getLivrosSugeridos()) {
+			livroSugerido.setQtdeAdquirida(dto.getItens().get(livroSugerido.getId()));
+		}
+
+		sugestao.setDataRetornoPedido(new Date());
+
+		em.merge(sugestao);
+	}
+
 	public void fazerPedido(SugestaoAquisicao sugestao) throws PedidoException {
 		if (sugestao.getId() == null || sugestao.getDataEnvioPedido() != null) {
 			throw new PedidoException();
 		}
 
 		// URL chamada pela Distribuidora após o processamento do Pedido.
-		String callback = "http://localhost:8080/biblioteca/notificarPedido?controle=" + sugestao.getId();
+		String callback = "http://localhost:8080/biblioteca/api/notificarPedido?sugestao=" + sugestao.getId();
 
 		PedidoDTO dto = new PedidoDTO(1000L, callback);
 
