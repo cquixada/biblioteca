@@ -20,6 +20,10 @@ public class ReservaLivro implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "reserva")
+	private Reserva reserva;
 
 	@ManyToOne
 	@JoinColumn(name = "id_livro")
@@ -42,6 +46,14 @@ public class ReservaLivro implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Reserva getReserva() {
+		return reserva;
+	}
+
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
 	}
 
 	public Livro getLivro() {
