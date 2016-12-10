@@ -35,6 +35,18 @@ public class SugestaoAquisicaoEJB {
 		}
 	}
 
+	public SugestaoAquisicao obterUltimaAquisicao() {
+		try {
+			SugestaoAquisicao sugestao = em.createNamedQuery("obterUltimaAquisicao", SugestaoAquisicao.class)
+					.getSingleResult();
+
+			return sugestao;
+
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
+
 	public SugestaoAquisicao obterSugestaoAquisicao(Long id) {
 		try {
 			SugestaoAquisicao sugestao = em.createNamedQuery("obterSugestaoAquisicaoPorId", SugestaoAquisicao.class)
