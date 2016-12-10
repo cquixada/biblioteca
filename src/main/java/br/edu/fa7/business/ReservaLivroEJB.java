@@ -29,7 +29,7 @@ public class ReservaLivroEJB {
 		reservasPendentes = new ArrayList<>();
 	}
 
-	public List<ReservaLivro> listarTodos() {
+	public List<ReservaLivro> getReservasFinalizadas() {
 		return em.createNamedQuery("listarReserva", ReservaLivro.class).getResultList();
 	}
 
@@ -54,17 +54,17 @@ public class ReservaLivroEJB {
 	public void finalizarReserva(HashMap<String, Integer> livrosQuantidade) {
 		Reserva reserva = new Reserva();
 		reserva.setDataHora(new Date(Calendar.getInstance().getTimeInMillis()));
-		em.persist(reserva);
+		reserva.setReservaLivro(new ArrayList<>());
 		reservasPendentes.forEach(reservaPendente -> {
 			Integer qtdeDisponivel = livrosQuantidade.get(reservaPendente.getLivro().getTitulo());
 			if(reservaPendente.getQuantidade() > qtdeDisponivel) {
 				reservaPendente.setQuantidade(qtdeDisponivel);
 			}						
-			if(qtdeDisponivel != 0) {				
-				reservaPendente.setReserva(reserva);
-				em.persist(reservaPendente);
+			if(qtdeDisponivel > 0) {
+				reserva.getReservaLivro().add(reservaPendente);
 			}			
 		});
+		em.persist(reserva);
 		reservasPendentes.removeAll(reservasPendentes);
 	}
 

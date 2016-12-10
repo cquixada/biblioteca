@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "reserva_livro")
-@NamedQuery(name = "listarReserva", query = "SELECT rl FROM ReservaLivro rl ORDER BY rl.livro.titulo ASC")
+@NamedQuery(name = "listarReserva", query = "SELECT rl FROM ReservaLivro rl")
 public class ReservaLivro implements Serializable {
 
 	private static final long serialVersionUID = 5162496192577076647L;
@@ -20,10 +20,6 @@ public class ReservaLivro implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	@ManyToOne
-	@JoinColumn(name = "reserva")
-	private Reserva reserva;
 
 	@ManyToOne
 	@JoinColumn(name = "id_livro")
@@ -46,14 +42,6 @@ public class ReservaLivro implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	public Reserva getReserva() {
-		return reserva;
-	}
-
-	public void setReserva(Reserva reserva) {
-		this.reserva = reserva;
 	}
 
 	public Livro getLivro() {

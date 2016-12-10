@@ -48,7 +48,7 @@ public class ReservaLivroBean {
 	}
 	
 	public List<ReservaLivro> getReservasFinalizadas() {
-		return reservaLivroEJB.listarTodos();
+		return reservaLivroEJB.getReservasFinalizadas();
 	}
 
 	public void adicionarParaReserva(Livro livro) {
@@ -63,7 +63,7 @@ public class ReservaLivroBean {
 		estoqueLivros.forEach(estoqueLivro -> {	
 			livrosQuantidade.put(estoqueLivro.getLivro().getTitulo(), estoqueLivro.getQuantidade());
 		});		
-		reservaLivroEJB.listarTodos().forEach(reservaLivro -> {
+		getReservasFinalizadas().forEach(reservaLivro -> {
 			Integer qtdeDisponivel = livrosQuantidade.get(reservaLivro.getLivro().getTitulo()) - reservaLivro.getQuantidade();
 			livrosQuantidade.put(reservaLivro.getLivro().getTitulo(), qtdeDisponivel);
 		});
