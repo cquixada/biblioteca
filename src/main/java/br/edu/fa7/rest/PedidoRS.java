@@ -15,12 +15,13 @@ import br.edu.fa7.business.NenhumaSugestaoException;
 import br.edu.fa7.business.SugestaoAquisicaoEJB;
 import br.edu.fa7.model.PedidoDTO;
 
+@Path("pedidos")
 public class PedidoRS {
 	@Inject
 	private SugestaoAquisicaoEJB sugestaoAquisicaoEJB;
 
 	@PUT
-	@Path("notificarPedido")
+	@Path("notificar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response atualizarSugestao(@QueryParam("sugestao") Long idSugestao, PedidoDTO dto) {

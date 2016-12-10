@@ -69,7 +69,7 @@ public class SugestaoAquisicaoEJB {
 		}
 
 		// URL chamada pela Distribuidora após o processamento do Pedido.
-		String callback = "http://localhost:8080/biblioteca/api/notificarPedido?sugestao=" + sugestao.getId();
+		String callback = "http://localhost:8080/biblioteca/api/pedidos/notificar?sugestao=" + sugestao.getId();
 
 		PedidoDTO dto = new PedidoDTO(1000L, callback);
 
