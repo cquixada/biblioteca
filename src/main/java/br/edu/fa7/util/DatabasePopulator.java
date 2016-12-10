@@ -1,5 +1,6 @@
 package br.edu.fa7.util;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.annotation.PostConstruct;
@@ -8,6 +9,7 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import br.edu.fa7.model.Estoque;
 import br.edu.fa7.model.EstoqueLivro;
 import br.edu.fa7.model.Livro;
 import br.edu.fa7.model.LivroSugerido;
@@ -36,8 +38,12 @@ public class DatabasePopulator {
 			EstoqueLivro estoqueLivro1 = new EstoqueLivro(livro1, 5);
 			EstoqueLivro estoqueLivro2 = new EstoqueLivro(livro2, 4);
 			
-			em.persist(estoqueLivro1);
-			em.persist(estoqueLivro2);
+			Estoque estoque = new Estoque();
+			estoque.setEstoqueLivros(new ArrayList<>());
+			estoque.getEstoqueLivros().add(estoqueLivro1);
+			estoque.getEstoqueLivros().add(estoqueLivro2);
+			
+			em.persist(estoque);
 
 			LivroSugerido livroSugerido1 = new LivroSugerido(sugestao, livro1, 2);
 			LivroSugerido livroSugerido2 = new LivroSugerido(sugestao, livro2, 1);					

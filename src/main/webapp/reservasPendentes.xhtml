@@ -9,7 +9,7 @@
 	<ui:define name="content">
 		<h:form>
 			<h:dataTable id="reservasPendentes"
-				value="#{reservaLivroBean.getReservasPendentes()}" var="reserva"
+				value="#{gerenciadorLivroBean.getReservasPendentes()}" var="reserva"
 				border="1">
 
 				<h:column>
@@ -32,7 +32,7 @@
 
 			<h:commandButton value="Voltar" action="livros?faces-redirect=true" />
 			<h:commandButton value="Finalizar Reserva"
-				action="#{reservaLivroBean.finalizarReserva}" />
+				action="#{gerenciadorLivroBean.finalizarReserva}" />
 
 		</h:form>
 	</ui:define>

@@ -10,7 +10,7 @@
 	<ui:define name="content">
 		<h:form>
 			<h:dataTable id="listaEstoqueLivros"
-				value="#{reservaLivroBean.estoqueLivros}" var="estoqueLivro"
+				value="#{gerenciadorLivroBean.estoqueLivros}" var="estoqueLivro"
 				border="1">
 
 				<h:column>
@@ -32,12 +32,12 @@
 						<h:outputText value="Reservar" />
 					</f:facet>
 					<h:commandButton value="+"
-						action="#{reservaLivroBean.adicionarParaReserva(estoqueLivro.livro)}" />
+						action="#{gerenciadorLivroBean.adicionarParaReserva(estoqueLivro.livro)}" />
 				</h:column>
 			</h:dataTable>
 			<br />
 			<h:commandButton value="Voltar" action="index?faces-redirect=true" />
-			<c:if test="#{reservaLivroBean.getReservasPendentes().size() > 0}">
+			<c:if test="#{gerenciadorLivroBean.getReservasPendentes().size() > 0}">
 				<br />
 				<h:commandLink action="reservasPendentes?faces-redirect=true"
 					value="Visualizar Reserva" />

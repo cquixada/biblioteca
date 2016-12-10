@@ -20,7 +20,7 @@ import br.edu.fa7.model.ReservaLivro;
 
 @Named
 @ApplicationScoped
-public class ReservaLivroBean {
+public class GerenciadorLivroBean {
 
 	@Inject
 	private EstoqueLivroEJB estoqueLivroEJB;

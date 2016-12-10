@@ -14,7 +14,7 @@
 			<h:commandLink action="livros?faces-redirect=true"
 				value="Visualizar Livros" />
 			<br/>
-			<c:if test="#{reservaLivroBean.getReservasFinalizadas().size() > 0}">
+			<c:if test="#{gerenciadorLivroBean.getReservasFinalizadas().size() > 0}">
 				<h:commandLink action="reservasFinalizadas?faces-redirect=true"
 					value="Reservas Finalizadas" />
 			</c:if>

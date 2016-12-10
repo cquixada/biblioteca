@@ -16,11 +16,8 @@ public class EstoqueLivroEJB {
 	@Inject
 	private EntityManager em;
 	
-	private Estoque estoque;
-	
-	public EstoqueLivroEJB() {
-		estoque = new Estoque();
-	}	
+	@Inject
+	private Estoque estoque;	
 	
 	@PostConstruct
 	public void carregarEstoque() {
