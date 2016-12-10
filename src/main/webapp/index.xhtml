@@ -9,11 +9,13 @@
 	<ui:define name="content">
 		<h:form>
 			<h:commandLink action="pedido?faces-redirect=true"
-				value="Fazer Pedido" />
-			<br/>
+				value="Fazer/Visualizar Pedido" />
+			<br />
+			<br />
 			<h:commandLink action="livros?faces-redirect=true"
 				value="Visualizar Livros" />
-			<br/>
+			<br />
+			<br />
 			<c:if test="#{reservaLivroBean.getReservasFinalizadas().size() > 0}">
 				<h:commandLink action="reservasFinalizadas?faces-redirect=true"
 					value="Reservas Finalizadas" />

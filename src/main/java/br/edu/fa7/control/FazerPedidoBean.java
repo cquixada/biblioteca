@@ -21,12 +21,22 @@ public class FazerPedidoBean {
 
 	private SugestaoAquisicao sugestao;
 
+	private SugestaoAquisicao ultimaAquisicao;
+
 	public SugestaoAquisicao getSugestao() {
 		return sugestao;
 	}
 
 	public void setSugestao(SugestaoAquisicao sugestao) {
 		this.sugestao = sugestao;
+	}
+
+	public SugestaoAquisicao getUltimaAquisicao() {
+		return ultimaAquisicao;
+	}
+
+	public void setUltimaAquisicao(SugestaoAquisicao ultimaAquisicao) {
+		this.ultimaAquisicao = ultimaAquisicao;
 	}
 
 	@PostConstruct
@@ -38,6 +48,8 @@ public class FazerPedidoBean {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage()));
 		}
+
+		ultimaAquisicao = sugestaoAquisicaoEJB.obterUltimaAquisicao();
 	}
 
 	public String fazerPedido() {

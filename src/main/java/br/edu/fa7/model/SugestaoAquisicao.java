@@ -22,6 +22,7 @@ import javax.persistence.TemporalType;
 @Table(name = "sugestoes_aquisicao")
 @NamedQueries({
 		@NamedQuery(name = "obterSugestaoAquisicaoAtiva", query = "SELECT sa FROM SugestaoAquisicao sa WHERE sa.dataEnvioPedido IS NULL"),
+		@NamedQuery(name = "obterUltimaAquisicao", query = "SELECT sa FROM SugestaoAquisicao sa WHERE sa.dataRetornoPedido = (SELECT MAX(s.dataRetornoPedido) FROM SugestaoAquisicao s)"),
 		@NamedQuery(name = "obterSugestaoAquisicaoPorId", query = "SELECT sa FROM SugestaoAquisicao sa WHERE sa.id = :id") })
 public class SugestaoAquisicao implements Serializable {
 	private static final long serialVersionUID = 4546622568582391153L;
