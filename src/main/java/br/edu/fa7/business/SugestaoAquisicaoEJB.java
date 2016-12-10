@@ -55,11 +55,10 @@ public class SugestaoAquisicaoEJB {
 		}
 
 		for (LivroSugerido livroSugerido : sugestao.getLivrosSugeridos()) {
-			livroSugerido.setQtdeAdquirida(dto.getItens().get(livroSugerido.getId()));
+			livroSugerido.setQtdeAdquirida(dto.getItens().get(livroSugerido.getLivro().getIdProduto()));
 		}
 
 		sugestao.setDataRetornoPedido(new Date());
-
 		em.merge(sugestao);
 	}
 
