@@ -32,7 +32,7 @@ public class ReservaLivroBean {
 
 	@PostConstruct
 	public void iniciar() {
-		estoqueLivros = estoqueLivroEJB.listarTodos();
+		estoqueLivros = estoqueLivroEJB.getEstoqueLivros();
 	}
 
 	public List<EstoqueLivro> getEstoqueLivros() {
@@ -60,7 +60,7 @@ public class ReservaLivroBean {
 
 	public void finalizarReserva() {
 		HashMap<String, Integer> livrosQuantidade = new HashMap<>();
-		estoqueLivros.forEach(estoqueLivro -> {			
+		estoqueLivros.forEach(estoqueLivro -> {	
 			livrosQuantidade.put(estoqueLivro.getLivro().getTitulo(), estoqueLivro.getQuantidade());
 		});		
 		reservaLivroEJB.listarTodos().forEach(reservaLivro -> {

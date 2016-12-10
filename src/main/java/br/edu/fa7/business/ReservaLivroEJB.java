@@ -1,6 +1,8 @@
 package br.edu.fa7.business;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import br.edu.fa7.model.Livro;
+import br.edu.fa7.model.Reserva;
 import br.edu.fa7.model.ReservaLivro;
 
 @Stateful
@@ -49,13 +52,18 @@ public class ReservaLivroEJB {
 	}
 
 	public void finalizarReserva(HashMap<String, Integer> livrosQuantidade) {
-		reservasPendentes.forEach(reserva -> {
-			Integer qtdeDisponivel = livrosQuantidade.get(reserva.getLivro().getTitulo());
-			if(reserva.getQuantidade() > qtdeDisponivel) {
-				reserva.setQuantidade(qtdeDisponivel);
+		reservasPendentes.forEach(reservaPendente -> {
+			Integer qtdeDisponivel = livrosQuantidade.get(reservaPendente.getLivro().getTitulo());
+			if(reservaPendente.getQuantidade() > qtdeDisponivel) {
+				reservaPendente.setQuantidade(qtdeDisponivel);
 			}			
 			if(qtdeDisponivel != 0) {
+				Reserva reserva = new Reserva();
+				reserva.setDataHora(new Date(Calendar.getInstance().getTimeInMillis()));
 				em.persist(reserva);
+				
+				reservaPendente.setReserva(reserva);
+				em.persist(reservaPendente);
 			}			
 		});
 		reservasPendentes.removeAll(reservasPendentes);
