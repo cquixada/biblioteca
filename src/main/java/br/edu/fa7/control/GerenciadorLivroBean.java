@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -19,7 +19,7 @@ import br.edu.fa7.model.Livro;
 import br.edu.fa7.model.ReservaLivro;
 
 @Named
-@ApplicationScoped
+@ViewScoped
 public class GerenciadorLivroBean {
 
 	@Inject
@@ -28,19 +28,9 @@ public class GerenciadorLivroBean {
 	@Inject
 	private ReservaLivroEJB reservaLivroEJB;
 
-	private List<EstoqueLivro> estoqueLivros;
-
-	@PostConstruct
-	public void iniciar() {
-		estoqueLivros = estoqueLivroEJB.getEstoqueLivros();
-	}
 
 	public List<EstoqueLivro> getEstoqueLivros() {
-		return estoqueLivros;
-	}
-
-	public void setEstoqueLivros(List<EstoqueLivro> estoqueLivros) {
-		this.estoqueLivros = estoqueLivros;
+		return estoqueLivroEJB.getEstoqueLivros();
 	}
 
 	public List<ReservaLivro> getReservasPendentes() {
@@ -60,7 +50,7 @@ public class GerenciadorLivroBean {
 
 	public void finalizarReserva() {
 		HashMap<String, Integer> livrosQuantidade = new HashMap<>();
-		estoqueLivros.forEach(estoqueLivro -> {	
+		getEstoqueLivros().forEach(estoqueLivro -> {	
 			livrosQuantidade.put(estoqueLivro.getLivro().getTitulo(), estoqueLivro.getQuantidade());
 		});		
 		getReservasFinalizadas().forEach(reservaLivro -> {

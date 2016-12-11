@@ -10,7 +10,7 @@
 	<ui:define name="content">
 		<h:form>
 			<h:dataTable id="listaEstoqueLivros"
-				value="#{gerenciadorLivroBean.estoqueLivros}" var="estoqueLivro"
+				value="#{gerenciadorLivroBean.getEstoqueLivros()}" var="estoqueLivro"
 				border="1">
 
 				<h:column>
