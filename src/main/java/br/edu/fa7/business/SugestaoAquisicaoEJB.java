@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.Response;
 
 import com.google.gson.Gson;
 
+import br.edu.fa7.model.EstoqueLivro;
 import br.edu.fa7.model.LivroSugerido;
 import br.edu.fa7.model.PedidoDTO;
 import br.edu.fa7.model.SugestaoAquisicao;
@@ -66,10 +68,20 @@ public class SugestaoAquisicaoEJB {
 			throw new NenhumaSugestaoException();
 		}
 
+		Query query = em.createQuery("SELECT el FROM EstoqueLivro el WHERE el.livro.id = :idLivro");
+		EstoqueLivro estoqueLivro;
+
 		for (LivroSugerido livroSugerido : sugestao.getLivrosSugeridos()) {
 			livroSugerido.setQtdeAdquirida(dto.getItens().get(livroSugerido.getLivro().getIdProduto()));
+
+			// Atualiza a quantidade em estoque do livro.
+			query.setParameter("idLivro", livroSugerido.getLivro().getId());
+			estoqueLivro = (EstoqueLivro) query.getSingleResult();
+			estoqueLivro.setQuantidade(estoqueLivro.getQuantidade() + livroSugerido.getQtdeAdquirida());
+			em.merge(estoqueLivro);
 		}
 
+		// Atualiza a sugestão com as quantidades adquiridas.
 		sugestao.setDataRetornoPedido(new Date());
 		em.merge(sugestao);
 	}
