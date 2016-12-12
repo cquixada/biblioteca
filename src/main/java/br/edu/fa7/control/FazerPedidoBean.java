@@ -59,7 +59,7 @@ public class FazerPedidoBean {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 					"Pedido enviado à distribuidora.", "Pedido enviado à distribuidora."));
 
-		} catch (PedidoException e) {
+		} catch (PedidoException | NenhumaSugestaoException e) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage()));
 		}

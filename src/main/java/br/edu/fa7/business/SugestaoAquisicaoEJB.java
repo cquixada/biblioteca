@@ -86,9 +86,21 @@ public class SugestaoAquisicaoEJB {
 		em.merge(sugestao);
 	}
 
-	public void fazerPedido(SugestaoAquisicao sugestao) throws PedidoException {
+	public void fazerPedido(SugestaoAquisicao sugestao) throws PedidoException, NenhumaSugestaoException {
 		if (sugestao.getId() == null || sugestao.getDataEnvioPedido() != null) {
 			throw new PedidoException();
+		}
+
+		boolean nenhumaSugestao = true;
+
+		for (LivroSugerido livroSugerido : sugestao.getLivrosSugeridos()) {
+			if (livroSugerido.getQtdeSolicitada() > 0) {
+				nenhumaSugestao = false;
+			}
+		}
+
+		if (nenhumaSugestao) {
+			throw new NenhumaSugestaoException();
 		}
 
 		// URL chamada pela Distribuidora após o processamento do Pedido.

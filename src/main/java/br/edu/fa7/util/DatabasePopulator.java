@@ -34,19 +34,19 @@ public class DatabasePopulator {
 			SugestaoAquisicao sugestao = new SugestaoAquisicao(new Date());
 
 			em.persist(sugestao);
-			
+
 			EstoqueLivro estoqueLivro1 = new EstoqueLivro(livro1, 5);
 			EstoqueLivro estoqueLivro2 = new EstoqueLivro(livro2, 4);
-			
+
 			Estoque estoque = new Estoque();
 			estoque.setEstoqueLivros(new ArrayList<>());
 			estoque.getEstoqueLivros().add(estoqueLivro1);
 			estoque.getEstoqueLivros().add(estoqueLivro2);
-			
+
 			em.persist(estoque);
 
-			LivroSugerido livroSugerido1 = new LivroSugerido(sugestao, livro1, 2);
-			LivroSugerido livroSugerido2 = new LivroSugerido(sugestao, livro2, 1);					
+			LivroSugerido livroSugerido1 = new LivroSugerido(sugestao, livro1, 1);
+			LivroSugerido livroSugerido2 = new LivroSugerido(sugestao, livro2, 1);
 
 			sugestao.getLivrosSugeridos().add(livroSugerido1);
 			sugestao.getLivrosSugeridos().add(livroSugerido2);
