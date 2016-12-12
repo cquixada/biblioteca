@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -19,7 +18,7 @@ import br.edu.fa7.model.Livro;
 import br.edu.fa7.model.ReservaLivro;
 
 @Named
-@ViewScoped
+@ApplicationScoped
 public class GerenciadorLivroBean {
 
 	@Inject
@@ -28,7 +27,6 @@ public class GerenciadorLivroBean {
 	@Inject
 	private ReservaLivroEJB reservaLivroEJB;
 
-
 	public List<EstoqueLivro> getEstoqueLivros() {
 		return estoqueLivroEJB.getEstoqueLivros();
 	}
@@ -36,7 +34,7 @@ public class GerenciadorLivroBean {
 	public List<ReservaLivro> getReservasPendentes() {
 		return reservaLivroEJB.getReservasPendentes();
 	}
-	
+
 	public List<ReservaLivro> getReservasFinalizadas() {
 		return reservaLivroEJB.getReservasFinalizadas();
 	}
@@ -50,15 +48,16 @@ public class GerenciadorLivroBean {
 
 	public void finalizarReserva() {
 		HashMap<String, Integer> livrosQuantidade = new HashMap<>();
-		getEstoqueLivros().forEach(estoqueLivro -> {	
+		getEstoqueLivros().forEach(estoqueLivro -> {
 			livrosQuantidade.put(estoqueLivro.getLivro().getTitulo(), estoqueLivro.getQuantidade());
-		});		
+		});
 		getReservasFinalizadas().forEach(reservaLivro -> {
-			Integer qtdeDisponivel = livrosQuantidade.get(reservaLivro.getLivro().getTitulo()) - reservaLivro.getQuantidade();
+			Integer qtdeDisponivel = livrosQuantidade.get(reservaLivro.getLivro().getTitulo())
+					- reservaLivro.getQuantidade();
 			livrosQuantidade.put(reservaLivro.getLivro().getTitulo(), qtdeDisponivel);
 		});
 		reservaLivroEJB.finalizarReserva(livrosQuantidade);
-		
+
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Lista de reserva finalizada", "Lista de reserva finalizada"));
 		try {
@@ -66,6 +65,6 @@ public class GerenciadorLivroBean {
 			context.redirect(context.getRequestContextPath() + "/index.xhtml");
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 }
