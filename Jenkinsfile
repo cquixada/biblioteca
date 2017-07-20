@@ -1,9 +1,11 @@
 pipeline {
-    agent { docker { image 'maven:3.3.3' } }
+    agent {
+        docker { image 'node:7-alpine' }
+    }
     stages {
-        stage('Build') {
+        stage('Test') {
             steps {
-                bat './mvn_version'
+                sh 'node --version'
             }
         }
     }
