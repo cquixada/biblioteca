@@ -1,9 +1,9 @@
 pipeline {
-    agent any
+    agent { docker 'maven:3.3.3' }
     stages {
         stage('Build') {
             steps {
-                bat 'echo "Minha primeira pipeline"'
+                bat './mvn_version'
             }
         }
     }
